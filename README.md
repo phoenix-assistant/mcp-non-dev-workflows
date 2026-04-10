@@ -1,171 +1,135 @@
 # MCP for Non-Dev Workflows
 
-> **One-liner:** MCP servers that bring AI agents to compliance, deal flow, and support—not just code.
+> Pre-built MCP servers that bring AI agents to compliance, deal flow, and support — not just code.
 
-## Problem
+Three production-ready MCP servers for operations teams:
 
-**Persona:** Sarah, VP of Operations at a 200-person fintech
+| Server | What it does | Tools |
+|--------|-------------|-------|
+| **mcp-compliance** | SOC2, HIPAA, GDPR checklist automation with audit trails | `check_compliance_status`, `create_audit_evidence`, `generate_compliance_report`, `schedule_review`, `initialize_framework`, `update_control_status` |
+| **mcp-dealflow** | Unified deal pipeline management | `track_deal_stage`, `flag_stalled_deal`, `generate_deal_summary`, `create_approval_request` |
+| **mcp-escalation** | Smart support routing with SLA tracking | `create_escalation`, `route_ticket`, `track_sla`, `auto_gather_context`, `resolve_escalation` |
 
-**Pain:**
-- Her team spends 40+ hours/week on compliance checklists that could be automated
-- Deal flow tracking lives in 7 different tools (Salesforce, DocuSign, Slack, email, spreadsheets)
-- Support escalation requires manual handoffs across 3 teams, average resolution: 4.2 days
-- Every "AI solution" she's seen is either code-focused or requires $500k enterprise contracts
+## Quick Start (Non-Developer Guide)
 
-**Quantified:**
-- $180k/year in ops labor on manual compliance tasks alone
-- 23% of deals stall due to handoff friction
-- CSAT drops 15 points when escalations take >48 hours
+### Prerequisites
+- Python 3.10+ ([download](https://python.org/downloads))
+- [Claude Desktop](https://claude.ai/download) installed
 
-## Solution
+### Install
 
-**What:** Pre-built MCP servers for non-developer workflows:
-- `mcp-compliance`: SOC2, HIPAA, GDPR checklist automation with audit trails
-- `mcp-dealflow`: Unified pipeline across CRM, contracts, approvals
-- `mcp-escalation`: Smart routing, SLA tracking, auto-context gathering
+```bash
+# Clone the repo
+git clone https://github.com/phoenix-assistant/mcp-non-dev-workflows.git
+cd mcp-non-dev-workflows
 
-**How:** 
-- Each MCP server wraps existing tools (Salesforce, Jira, DocuSign, Zendesk) via their APIs
-- Exposes standardized tools/resources to any MCP-compatible agent (Claude Desktop, custom)
-- Compliance server includes built-in audit logging and approval workflows
-
-**Why Us:**
-- We've built MCP servers before (dev tooling)
-- Understand agent orchestration deeply
-- Can ship fast, iterate on real feedback
-
-## Why Now
-
-1. **MCP hit escape velocity** (Dec 2024) — Anthropic's backing, Claude Desktop native support
-2. **Enterprise AI fatigue** — Companies tried ChatGPT wrappers, want real integrations
-3. **Compliance pressure intensifying** — SEC AI disclosure rules, EU AI Act enforcement 2025
-4. **"AI for ops" is underserved** — 90% of MCP servers target developers
-
-## Market Landscape
-
-**TAM:** $45B (enterprise workflow automation)
-**SAM:** $8B (mid-market compliance + ops automation)  
-**SOM:** $200M (MCP-native workflow tools, Year 3)
-
-### Competitors & Gaps
-
-| Competitor | Gap |
-|------------|-----|
-| **Zapier** | No AI-native, no agent integration, trigger-based only |
-| **Workato** | Enterprise pricing ($50k+), complex setup, no MCP |
-| **ServiceNow** | Massive, slow, $200k+ implementations |
-| **Tray.io** | Dev-focused, steep learning curve |
-| **n8n** | OSS but no compliance-specific templates |
-| **Custom MCP servers** | Everyone builds their own, no standards |
-
-**White space:** Agent-native workflow automation priced for mid-market with compliance built-in.
-
-## Competitive Advantages
-
-1. **First-mover in MCP ops tooling** — Dev MCP is crowded; ops is empty
-2. **Compliance audit trails baked in** — Not bolted on, designed from day 1
-3. **Network effects** — Shared tool definitions improve with usage
-4. **Switching cost** — Once workflows run through us, migration is painful
-5. **Distribution via MCP registries** — Free discovery channel
-
-## Technical Architecture
-
-```
-┌─────────────────────────────────────────────────────────┐
-│                    Agent Layer                          │
-│  (Claude Desktop / OpenClaw / Custom MCP Clients)       │
-└─────────────────────┬───────────────────────────────────┘
-                      │ MCP Protocol (stdio/SSE)
-┌─────────────────────▼───────────────────────────────────┐
-│              MCP Server Runtime (Node.js)               │
-│  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐       │
-│  │ Compliance  │ │  Deal Flow  │ │ Escalation  │       │
-│  │   Server    │ │   Server    │ │   Server    │       │
-│  └──────┬──────┘ └──────┬──────┘ └──────┬──────┘       │
-└─────────┼───────────────┼───────────────┼───────────────┘
-          │               │               │
-┌─────────▼───────────────▼───────────────▼───────────────┐
-│                  Integration Layer                       │
-│  ┌────────┐ ┌────────┐ ┌────────┐ ┌────────┐           │
-│  │Salesforce│ │DocuSign│ │ Jira  │ │Zendesk │ ...      │
-│  └────────┘ └────────┘ └────────┘ └────────┘           │
-└─────────────────────────────────────────────────────────┘
-          │
-┌─────────▼───────────────────────────────────────────────┐
-│              Shared Services                            │
-│  • Audit Log (append-only, signed)                      │
-│  • Credential Vault (encrypted, scoped)                 │
-│  • Usage Analytics (anonymized)                         │
-│  PostgreSQL + S3                                        │
-└─────────────────────────────────────────────────────────┘
+# Create virtual environment and install
+python3 -m venv .venv
+source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+pip install -e .
 ```
 
-**Stack:**
-- Runtime: Node.js + TypeScript (MCP SDK is JS-native)
-- Audit storage: PostgreSQL with append-only tables
-- Secrets: HashiCorp Vault or AWS Secrets Manager
-- Deployment: Docker containers, customer-hosted or our cloud
-- Testing: Playwright for integration tests against sandboxed APIs
+### Configure Claude Desktop
 
-## Build Plan
+Copy `claude_desktop_config.json` to your Claude Desktop config directory:
 
-| Week | Milestone |
-|------|-----------|
-| 1-2 | MCP server scaffold, Salesforce integration, basic deal flow tools |
-| 3-4 | DocuSign integration, compliance checklist tool, audit logging |
-| 5-6 | Zendesk integration, escalation routing, SLA tracking |
-| 7-8 | Claude Desktop testing, documentation, private beta (5 users) |
-| 9-10 | Feedback iteration, Jira integration, public beta |
-| 11-12 | Production hardening, pricing/billing, launch |
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 
-**Team:** 1 full-stack dev (you) + 1 part-time designer for docs/landing
+Edit the file to set the correct `cwd` path to where you cloned the repo, and update `command` to point to the Python in your `.venv`:
 
-## Risks & Mitigations
+```json
+{
+  "mcpServers": {
+    "mcp-compliance": {
+      "command": "/path/to/mcp-non-dev-workflows/.venv/bin/python",
+      "args": ["-m", "mcp_compliance.server"],
+      "cwd": "/path/to/mcp-non-dev-workflows"
+    },
+    "mcp-dealflow": {
+      "command": "/path/to/mcp-non-dev-workflows/.venv/bin/python",
+      "args": ["-m", "mcp_dealflow.server"],
+      "cwd": "/path/to/mcp-non-dev-workflows"
+    },
+    "mcp-escalation": {
+      "command": "/path/to/mcp-non-dev-workflows/.venv/bin/python",
+      "args": ["-m", "mcp_escalation.server"],
+      "cwd": "/path/to/mcp-non-dev-workflows"
+    }
+  }
+}
+```
 
-| Risk | Likelihood | Impact | Mitigation |
-|------|------------|--------|------------|
-| MCP doesn't get enterprise adoption | Medium | High | Build REST API fallback, MCP is implementation detail |
-| Integration APIs change | High | Medium | Abstract integration layer, version pinning |
-| Compliance requirements vary wildly | High | Medium | Start with SOC2 Type II (most common), modular framework |
-| Enterprise sales cycle too long | Medium | High | Focus on mid-market (50-500 employees), self-serve trial |
-| Security concerns block adoption | Medium | High | SOC2 cert ourselves, on-prem deployment option |
+Restart Claude Desktop. You'll see the tools available in your conversation.
 
-## Monetization
+## Use Cases
 
-**Model:** Usage-based + seat tiers
+### Compliance Team
+> "Initialize our SOC2 checklist, assign controls to team leads, and generate a gap report"
 
-| Tier | Price | Includes |
-|------|-------|----------|
-| Starter | $99/mo | 1 MCP server, 5 users, 1000 actions/mo |
-| Team | $299/mo | 3 servers, 20 users, 10k actions/mo |
-| Business | $799/mo | Unlimited servers, 100 users, 50k actions/mo |
-| Enterprise | Custom | SSO, audit exports, on-prem, SLA |
+```
+→ initialize_framework(framework="SOC2", assignee="sarah")
+→ check_compliance_status(framework="SOC2")
+→ generate_compliance_report(framework="SOC2")
+```
 
-**Path to $1M ARR:**
+### Sales Operations
+> "Create a deal for Acme Corp at $150K, move it to proposal stage, and flag the stalled deals"
 
-- **Target:** 150 Business customers @ $799/mo = $1.44M ARR
-- **Funnel:** 
-  - 10,000 free trial signups (MCP registry + content marketing)
-  - 5% convert to paid = 500 customers
-  - 30% upgrade to Business within 6 months = 150 Business
-- **Timeline:** 18-24 months post-launch
+```
+→ track_deal_stage(name="Acme Corp", company="Acme", value=150000, stage="prospecting", actor="rep1")
+→ track_deal_stage(deal_id="...", stage="proposal", actor="rep1")
+→ flag_stalled_deal()  # lists all stalled deals
+```
 
-**Expansion:** Compliance certification prep services ($5k-$20k one-time)
+### Support Manager
+> "Create a critical escalation for the outage, check what's breaching SLA, and gather context"
 
-## Verdict
+```
+→ create_escalation(title="Production outage", description="DB down", severity="critical", category="technical", actor="oncall")
+→ track_sla()  # overview of all SLA status
+→ auto_gather_context(customer_id="cust-123")
+```
 
-### 🟢 BUILD
+## Architecture
 
-**Reasoning:**
-1. **Clear market gap** — MCP is dev-saturated, ops is empty
-2. **Timing is perfect** — MCP adoption curve is early but real
-3. **Builds on existing skills** — MCP expertise transfers directly
-4. **Multiple expansion paths** — Vertical compliance (healthcare, finance), enterprise, services
-5. **Defensible** — First-mover + compliance audit trails create switching costs
+```
+┌─────────────────────────────────┐
+│     Claude Desktop / Agent      │
+└──────────┬──────────────────────┘
+           │ MCP (stdio)
+┌──────────▼──────────────────────┐
+│  mcp-compliance  │  mcp-dealflow │  mcp-escalation
+│  (SQLite + YAML) │  (SQLite)     │  (SQLite + YAML)
+└─────────────────────────────────┘
+```
 
-**Caveats:**
-- Requires patience for enterprise sales cycles
-- Need to validate demand with 5 pilot customers before going all-in
-- Consider launching compliance server first (highest pain, clearest buyer)
+- **Persistence**: SQLite databases in `~/.mcp/` (auto-created)
+- **Config**: YAML files for compliance frameworks and routing rules
+- **Audit**: Append-only audit log in every server
+- **Transport**: stdio (MCP standard)
 
-**First step:** Build `mcp-compliance` MVP with SOC2 checklist tool, find 3 beta customers in network.
+## Configuration
+
+### Compliance Frameworks
+Edit `mcp_compliance/frameworks.yaml` to customize controls for your organization.
+
+### Escalation Routing
+Edit `mcp_escalation/routing_rules.yaml` to configure team routing and SLA rules.
+
+## Development
+
+```bash
+# Install with dev dependencies
+pip install -e ".[dev]"
+
+# Run tests
+pytest tests/ -v
+
+# Run a server directly
+python -m mcp_compliance.server
+```
+
+## License
+
+MIT

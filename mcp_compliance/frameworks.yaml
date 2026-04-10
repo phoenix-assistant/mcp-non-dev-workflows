@@ -1,0 +1,76 @@
+SOC2:
+  Security:
+    - id: CC6.1
+      title: Logical and physical access controls
+    - id: CC6.2
+      title: System credentials management
+    - id: CC6.3
+      title: Access based on authorization
+    - id: CC6.6
+      title: Security measures against threats outside system boundaries
+    - id: CC6.7
+      title: Restrict data movement to authorized users
+    - id: CC6.8
+      title: Prevent unauthorized software
+  Availability:
+    - id: A1.1
+      title: System capacity and demand management
+    - id: A1.2
+      title: Environmental protections and recovery
+    - id: A1.3
+      title: Recovery infrastructure and testing
+  Confidentiality:
+    - id: C1.1
+      title: Confidential information identification
+    - id: C1.2
+      title: Confidential information disposal
+
+HIPAA:
+  Administrative:
+    - id: "164.308(a)(1)"
+      title: Security management process
+    - id: "164.308(a)(3)"
+      title: Workforce security
+    - id: "164.308(a)(4)"
+      title: Information access management
+    - id: "164.308(a)(5)"
+      title: Security awareness and training
+    - id: "164.308(a)(6)"
+      title: Security incident procedures
+  Technical:
+    - id: "164.312(a)(1)"
+      title: Access control
+    - id: "164.312(b)"
+      title: Audit controls
+    - id: "164.312(c)(1)"
+      title: Integrity controls
+    - id: "164.312(d)"
+      title: Person or entity authentication
+    - id: "164.312(e)(1)"
+      title: Transmission security
+
+GDPR:
+  Data Protection:
+    - id: Art.5
+      title: Principles of data processing
+    - id: Art.6
+      title: Lawfulness of processing
+    - id: Art.7
+      title: Conditions for consent
+    - id: Art.13
+      title: Information to be provided to data subjects
+    - id: Art.15
+      title: Right of access by data subject
+    - id: Art.17
+      title: Right to erasure
+    - id: Art.20
+      title: Right to data portability
+  Security:
+    - id: Art.25
+      title: Data protection by design and default
+    - id: Art.32
+      title: Security of processing
+    - id: Art.33
+      title: Notification of data breach to authority
+    - id: Art.35
+      title: Data protection impact assessment

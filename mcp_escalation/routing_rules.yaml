@@ -1,0 +1,22 @@
+routing:
+  billing:
+    team: finance-support
+    sla_hours: 24
+  technical:
+    team: engineering
+    sla_hours: 4
+  security:
+    team: security-ops
+    sla_hours: 1
+  account:
+    team: account-management
+    sla_hours: 48
+  general:
+    team: general-support
+    sla_hours: 24
+
+severity_multiplier:
+  critical: 0.25
+  high: 0.5
+  medium: 1.0
+  low: 2.0

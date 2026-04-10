@@ -1,0 +1,19 @@
+{
+  "mcpServers": {
+    "mcp-compliance": {
+      "command": "python",
+      "args": ["-m", "mcp_compliance.server"],
+      "cwd": "/path/to/mcp-non-dev-workflows"
+    },
+    "mcp-dealflow": {
+      "command": "python",
+      "args": ["-m", "mcp_dealflow.server"],
+      "cwd": "/path/to/mcp-non-dev-workflows"
+    },
+    "mcp-escalation": {
+      "command": "python",
+      "args": ["-m", "mcp_escalation.server"],
+      "cwd": "/path/to/mcp-non-dev-workflows"
+    }
+  }
+}

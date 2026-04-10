@@ -1,0 +1,37 @@
+[build-system]
+requires = ["setuptools>=68.0", "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mcp-non-dev-workflows"
+version = "0.1.0"
+description = "Pre-built MCP servers for compliance, deal flow, and escalation routing"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [{name = "Phoenix Assistant", email = "phoenix@example.com"}]
+keywords = ["mcp", "compliance", "dealflow", "escalation", "workflow-automation"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "mcp>=1.0.0",
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0", "pytest-asyncio>=0.21"]
+
+[project.scripts]
+mcp-compliance = "mcp_compliance.server:main"
+mcp-dealflow = "mcp_dealflow.server:main"
+mcp-escalation = "mcp_escalation.server:main"
+
+[tool.setuptools.packages.find]
+include = ["mcp_compliance*", "mcp_dealflow*", "mcp_escalation*"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
