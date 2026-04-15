@@ -1,0 +1,35 @@
+{
+  "name": "@phoenixaihub/mcp-non-dev-workflows",
+  "version": "0.1.0",
+  "description": "MCP server adapters for non-dev workflows: compliance, deal flow, and support escalation",
+  "main": "dist/index.js",
+  "bin": {
+    "mcp-workflows": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/cli.js serve",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": ["mcp", "compliance", "deal-flow", "support", "workflows"],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phoenix-assistant/mcp-non-dev-workflows"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "better-sqlite3": "^11.9.1",
+    "commander": "^13.1.0",
+    "uuid": "^11.1.0",
+    "zod": "^3.24.4"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^22.15.3",
+    "@types/uuid": "^10.0.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.1.2"
+  }
+}
